@@ -1,10 +1,10 @@
 import { Fragment, useState, useEffect, Component } from "react";
 import Users from "./Users";
+import ErrorBoundary from "./ErrorBoundary";
 import UsersContext from "../store/users-context";
 import classes from "./UserFinder.module.css";
 class UserFinder extends Component {
-
-    static contextType = UsersContext;  
+  static contextType = UsersContext;
 
   constructor() {
     super();
@@ -15,19 +15,19 @@ class UserFinder extends Component {
   }
 
   // Fetch the data and run only once
-  componentDidMount(){
-      // Send http request and update the state
-      this.setState({ filteredUsers: this.context.users });
+  componentDidMount() {
+    // Send http request and update the state
+    this.setState({ filteredUsers: this.context.users });
   }
 
   // Method used if the component is updated later
   componentDidUpdate(prevProps, prevState) {
-    if(prevState.searchTerm !== this.state.searchTerm)
-    this.setState({
-      filteredUsers: this.context.users.filter((user) =>
-        user.name.includes(this.state.searchTerm)
-      ),
-    });
+    if (prevState.searchTerm !== this.state.searchTerm)
+      this.setState({
+        filteredUsers: this.context.users.filter((user) =>
+          user.name.includes(this.state.searchTerm)
+        ),
+      });
   }
 
   searchChangeHandler(event) {
@@ -40,7 +40,9 @@ class UserFinder extends Component {
         <div className={classes.finder}>
           <input type="search" onChange={this.searchChangeHandler.bind(this)} />
         </div>
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+          <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </Fragment>
     );
   }
