@@ -1,6 +1,5 @@
-import { Component } from 'react';
+import { Component } from 'react';        // Mandatory for class-based components
 import classes from './User.module.css';
-
 
 // Class based component
 class User extends Component {
@@ -13,7 +12,8 @@ class User extends Component {
   }
 }
 
-// Functionnal component
+// FUNCTIONAL COMPONENT 
+// props property comes automatically with function-based components 
 // const User = (props) => {
 //   return <li className={classes.user}>{props.name}</li>;
 // };
